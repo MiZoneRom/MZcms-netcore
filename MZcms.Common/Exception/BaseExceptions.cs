@@ -38,7 +38,7 @@ namespace MZcms.Common
                 }
                 context.Result = new InternalServerErrorObjectResult(json);
             }
-            //采用log4net 进行错误日志记录LogHelper.ErrorLog(json.Message, context.Exception);
+            Log.Error(json.Message, context.Exception);
 
         }
     }
