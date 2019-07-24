@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MZcms.Common;
 using MZcms.Core.Framework.BaseControllers;
 
 namespace MZcms.Core.Controllers
@@ -15,6 +16,8 @@ namespace MZcms.Core.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            Log.Info("aaaaaaaaaaaaa");
+
             return new string[] { "value1", "value2" };
         }
 

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MZcms.Common\MZcms.Common.csproj" />
     <ProjectReference Include="..\MZcms.Core.Framework\MZcms.Core.Framework.csproj" />
     <ProjectReference Include="..\MZcms.Entity\MZcms.Entity.csproj" />
   </ItemGroup>
