@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MZcms.CommonModel\MZcms.CommonModel.csproj" />
+    <ProjectReference Include="..\MZcms.Model\MZcms.Model.csproj" />
+  </ItemGroup>
+
 </Project>

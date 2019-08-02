@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MZcms.Model;
+using System;
 using System.Collections.Generic;
 
 namespace MZcms.Entity.Entities
 {
-    public partial class ManagerLog
+    public partial class ManagerLog : BaseModel
     {
         public long Id { get; set; }
         public long UserId { get; set; }

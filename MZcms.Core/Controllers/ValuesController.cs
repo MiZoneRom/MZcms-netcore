@@ -18,6 +18,10 @@ namespace MZcms.Core.Controllers
         {
             Log.Info("aaaaaaaaaaaaa");
 
+            int xx = 0;
+
+            Console.WriteLine(0 / xx);
+
             return new string[] { "value1", "value2" };
         }
 

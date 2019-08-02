@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MZcms.Model;
+using System;
 using System.Collections.Generic;
 
 namespace MZcms.Entity.Entities
 {
-    public partial class Users
+    public partial class Users : BaseModel
     {
         public long Id { get; set; }
         public long GroupId { get; set; }

@@ -50,6 +50,10 @@ namespace MZcms.Service
                 return entities;
             }
         }
+
+        public void Dispose()
+        {
+        }
         #endregion
 
     }

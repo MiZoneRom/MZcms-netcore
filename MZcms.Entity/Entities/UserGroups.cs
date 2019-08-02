@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MZcms.Model;
+using System;
 using System.Collections.Generic;
 
 namespace MZcms.Entity.Entities
 {
-    public partial class UserGroups
+    public partial class UserGroups : BaseModel
     {
         public UserGroups()
         {

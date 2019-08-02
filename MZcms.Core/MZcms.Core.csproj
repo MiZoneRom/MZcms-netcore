@@ -15,6 +15,8 @@
     <ProjectReference Include="..\MZcms.Common\MZcms.Common.csproj" />
     <ProjectReference Include="..\MZcms.Core.Framework\MZcms.Core.Framework.csproj" />
     <ProjectReference Include="..\MZcms.Entity\MZcms.Entity.csproj" />
+    <ProjectReference Include="..\MZcms.IServices\MZcms.IServices.csproj" />
+    <ProjectReference Include="..\MZcms.Service\MZcms.Service.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>

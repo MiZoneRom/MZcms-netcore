@@ -1,9 +1,13 @@
-﻿using System;
+﻿using MZcms.CommonModel;
+using MZcms.Model;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MZcms.Entity.Entities
 {
-    public partial class Managers
+    public partial class Managers : BaseModel
     {
         public Managers()
         {
@@ -21,5 +25,7 @@ namespace MZcms.Entity.Entities
         public DateTime AddDate { get; set; }
 
         public virtual ICollection<ManagerLog> ManagerLog { get; set; }
+        [NotMapped]
+        public virtual List<AdminPrivilege> AdminPrivileges { get; set; }
     }
 }
