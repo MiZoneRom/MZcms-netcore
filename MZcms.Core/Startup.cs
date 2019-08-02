@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,9 +35,10 @@ namespace MZcms.Core
         }
 
         public IConfiguration Configuration { get; }
+        public static IContainer ApplicationContainer;
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
             //添加jwt验证：
@@ -66,13 +70,28 @@ namespace MZcms.Core
 
             services.AddMemoryCache();
 
-            services.AddTransient<IManagerService, ManagerService>();
+            //services.AddTransient<IManagerService, ManagerService>();
 
             //注入全局异常捕获
             services.AddMvc(o =>
             {
                 o.Filters.Add(typeof(BaseExceptions));
             });
+
+            //实例化 AutoFac  容器   
+            var builder = new ContainerBuilder();
+
+            var assemblys = Assembly.Load("MZcms.Service");//MZcms.Service是继承接口的实现方法类库名称
+            var baseType = typeof(IService);//IService 是一个接口（所有要实现依赖注入的借口都要继承该接口）
+
+            builder.RegisterAssemblyTypes(assemblys)
+                .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
+                .AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.Populate(services);
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);//第三方IOC接管 core内置DI容器
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
