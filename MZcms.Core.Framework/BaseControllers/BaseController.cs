@@ -1,17 +1,72 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using MZcms.Common;
+using MZcms.Common.Helper;
+using MZcms.Entity.Entities;
+using MZcms.IServices;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 
 namespace MZcms.Core.Framework.BaseControllers
 {
+
     public class BaseController : Controller
     {
+
         #region 构造函数
+
         public BaseController()
         {
+
         }
+
+        //public BaseController(IManagerService manager)
+        //{
+        //    _manager = manager;
+        //}
+
         #endregion
+
+        public Managers CurrentManager
+        {
+            get
+            {
+                string token = HttpContext.Request.Headers["Authorization"];
+                token = token.Replace("Bearer", "").Trim();
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    return null;
+                }
+
+                ClaimsPrincipal clams = new JwtTokenHelper().GetPrincipalFromAccessToken(token);
+
+                if (clams == null)
+                {
+                    return null;
+                }
+
+                Claim iden = clams.Claims.Where(a => a.Type == JwtRegisteredClaimNames.Sid).FirstOrDefault();
+
+                if (iden == null)
+                {
+                    return null;
+                }
+
+                var services = new ServiceCollection();
+                var provider = services.BuildServiceProvider();
+                provider.GetService<IManagerService>().GetManagers("aaa");
+
+                return null;
+            }
+
+        }
 
         #region 公共方法
 

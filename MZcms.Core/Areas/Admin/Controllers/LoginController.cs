@@ -8,6 +8,8 @@ using MZcms.Common.Helper;
 using MZcms.Core.Framework.BaseControllers;
 using MZcms.IServices;
 using MZcms.Entity.Entities;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MZcms.Core.Areas.Admin.Controllers
 {
@@ -36,10 +38,19 @@ namespace MZcms.Core.Areas.Admin.Controllers
                 return ErrorResult<int>("用户名或密码错误");
             }
 
-            JwtTokenHelper jwtTokenUtil = new JwtTokenHelper(_configuration);
-            string token = jwtTokenUtil.GetToken("admin");
+            JwtTokenHelper jwtTokenHelper = new JwtTokenHelper();
 
-            return SuccessResult<object>(new { token = token });
+            var claims = new Claim[]
+            {
+                new Claim(ClaimTypes.Name, managerModel.UserName),
+                new Claim(ClaimTypes.Role, managerModel.RoleId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sid, managerModel.Id.ToString()),
+            };
+
+            string token = jwtTokenHelper.GetToken(claims);
+            string refreshToken = jwtTokenHelper.RefreshToken();
+
+            return SuccessResult<object>(new { token = token, refreshToken = refreshToken, userName = managerModel.UserName });
         }
 
     }

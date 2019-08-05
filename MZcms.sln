@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZcms.DTO", "MZcms.DTO\MZcm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZcms.CommonModel", "MZcms.CommonModel\MZcms.CommonModel.csproj", "{E014BB5C-7B60-4B4E-B8BA-E41A2214366B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZcms.ServiceProvider", "MZcms.ServiceProvider\MZcms.ServiceProvider.csproj", "{E31408EC-E9AF-46E5-B0EF-113187D1B877}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{E014BB5C-7B60-4B4E-B8BA-E41A2214366B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E014BB5C-7B60-4B4E-B8BA-E41A2214366B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E014BB5C-7B60-4B4E-B8BA-E41A2214366B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E31408EC-E9AF-46E5-B0EF-113187D1B877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E31408EC-E9AF-46E5-B0EF-113187D1B877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E31408EC-E9AF-46E5-B0EF-113187D1B877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E31408EC-E9AF-46E5-B0EF-113187D1B877}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

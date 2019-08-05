@@ -35,7 +35,7 @@ namespace MZcms.Core
         }
 
         public IConfiguration Configuration { get; }
-        public static IContainer ApplicationContainer;
+        public IContainer ApplicationContainer;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -55,22 +55,35 @@ namespace MZcms.Core
                         ValidIssuer = "jwttest",//Issuer，这两项和前面签发jwt的设置一致
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))//拿到SecurityKey
                     };
+
+                    //认证过期添加过期消息
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                            {
+                                context.Response.Headers.Add("act", "expired");
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //注册EF服务
             ConfigDBContext(services);
 
             //配置跨域处理，允许所有来源：
             services.AddCors(options =>
                 options.AddPolicy("Any",
-                p => p.AllowAnyOrigin())
+                p => p.AllowAnyOrigin().AllowAnyHeader())
             );
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMemoryCache();
-
-            //services.AddTransient<IManagerService, ManagerService>();
 
             //注入全局异常捕获
             services.AddMvc(o =>
@@ -81,16 +94,22 @@ namespace MZcms.Core
             //实例化 AutoFac  容器   
             var builder = new ContainerBuilder();
 
-            var assemblys = Assembly.Load("MZcms.Service");//MZcms.Service是继承接口的实现方法类库名称
-            var baseType = typeof(IService);//IService 是一个接口（所有要实现依赖注入的借口都要继承该接口）
+            //MZcms.Service是继承接口的实现方法类库名称
+            var assemblys = Assembly.Load("MZcms.Service");
 
+            //IService 是一个接口（所有要实现依赖注入的借口都要继承该接口）
+            var baseType = typeof(IService);
+
+            //注入所有类库下的接口
             builder.RegisterAssemblyTypes(assemblys)
                 .Where(m => baseType.IsAssignableFrom(m) && m != baseType)
                 .AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.Populate(services);
             ApplicationContainer = builder.Build();
-            return new AutofacServiceProvider(ApplicationContainer);//第三方IOC接管 core内置DI容器
+
+            //第三方IOC接管 core内置DI容器
+            return new AutofacServiceProvider(ApplicationContainer);
 
         }
 
@@ -108,6 +127,7 @@ namespace MZcms.Core
 
             //设置log打印
             loggerFactory.AddNLog();
+            //设置nlog配置
             env.ConfigureNLog("Config/config_nlog.config");
 
             //启用验证

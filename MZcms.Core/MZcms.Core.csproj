@@ -18,6 +18,7 @@
     <ProjectReference Include="..\MZcms.Core.Framework\MZcms.Core.Framework.csproj" />
     <ProjectReference Include="..\MZcms.Entity\MZcms.Entity.csproj" />
     <ProjectReference Include="..\MZcms.IServices\MZcms.IServices.csproj" />
+    <ProjectReference Include="..\MZcms.ServiceProvider\MZcms.ServiceProvider.csproj" />
     <ProjectReference Include="..\MZcms.Service\MZcms.Service.csproj" />
   </ItemGroup>
 

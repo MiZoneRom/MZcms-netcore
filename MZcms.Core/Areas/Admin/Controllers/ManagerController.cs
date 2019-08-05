@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MZcms.Common.Helper;
 using MZcms.Core.Framework.BaseControllers;
+using MZcms.Entity.Entities;
 
 namespace MZcms.Core.Areas.Admin.Controllers
 {
@@ -22,13 +24,10 @@ namespace MZcms.Core.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult<object> Get(string name)
+        [Authorize]
+        public ActionResult<object> Get()
         {
-
-            JwtTokenHelper jwtTokenUtil = new JwtTokenHelper(_configuration);
-            string token = jwtTokenUtil.GetToken("admin");
-
-            return Json(new { token = token });
+            return Json(new { managerModel = CurrentManager });
         }
 
     }
