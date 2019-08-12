@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MZcms.Common.Helper;
 using MZcms.Core.Framework.BaseControllers;
-using MZcms.Entity.Entities;
 
 namespace MZcms.Core.Areas.Admin.Controllers
 {

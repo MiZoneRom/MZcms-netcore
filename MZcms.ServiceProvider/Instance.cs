@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Autofac.Configuration;
+using Microsoft.Extensions.Configuration;
 using MZcms.IServices;
 using System;
 using System.Collections;
@@ -14,7 +16,14 @@ namespace MZcms.ServiceProvider
         {
             get
             {
-                var builder = new ContainerBuilder();
+                ContainerBuilder builder = new ContainerBuilder();
+
+                //ConfigurationBuilder config = new ConfigurationBuilder();
+                //config.AddJsonFile("autofac.json");
+                //ConfigurationModule module = new ConfigurationModule(config.Build());
+                //var builder = new ContainerBuilder();
+                //builder.RegisterModule(module);
+
                 GetServiceProviders();
                 IContainer container = null;
                 try

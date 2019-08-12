@@ -20,32 +20,38 @@ namespace MZcms.Core.Framework.BaseControllers
     {
 
         #region 构造函数
-
         public BaseController()
         {
 
         }
-
-        //public BaseController(IManagerService manager)
-        //{
-        //    _manager = manager;
-        //}
-
         #endregion
 
-        public Managers CurrentManager
+        public string Token
         {
             get
             {
                 string token = HttpContext.Request.Headers["Authorization"];
                 token = token.Replace("Bearer", "").Trim();
+                return token;
+            }
+        }
 
-                if (string.IsNullOrEmpty(token))
+        /// <summary>
+        /// 当前管理员
+        /// </summary>
+        public Managers CurrentManager
+        {
+            get
+            {
+
+                string toekn = Token;
+
+                if (string.IsNullOrEmpty(toekn))
                 {
                     return null;
                 }
 
-                ClaimsPrincipal clams = new JwtTokenHelper().GetPrincipalFromAccessToken(token);
+                ClaimsPrincipal clams = new JwtTokenHelper().GetPrincipalFromAccessToken(toekn);
 
                 if (clams == null)
                 {
@@ -64,6 +70,12 @@ namespace MZcms.Core.Framework.BaseControllers
                 provider.GetService<IManagerService>().GetManagers("aaa");
 
                 return null;
+            }
+            set
+            {
+
+
+
             }
 
         }

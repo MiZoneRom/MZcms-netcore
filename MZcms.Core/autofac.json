@@ -1,0 +1,20 @@
+{
+  "components": [
+    {
+      "type": "MZcms.Strategy.AspNetCache, MZcms.Strategy.AspNetCache",
+      "services": [
+        {
+          "type": "MZcms.Common.ICache,MZcms.Common"
+        }
+      ]
+    },
+    {
+      "type": "MZcms.Strategy.AspNetIO, MZcms.Strategy.AspNetIO",
+      "services": [
+        {
+          "type": "MZcms.Common.IMZcmsIO,MZcms.Common"
+        }
+      ]
+    }
+  ]
+}
