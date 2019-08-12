@@ -15,11 +15,11 @@ namespace MZcms.ServiceProvider
             get
             {
                 var builder = new ContainerBuilder();
-                IContainer container = null;
                 GetServiceProviders();
-
+                IContainer container = null;
                 try
                 {
+                    //返回
                     T t;
 
                     //服务名称
@@ -41,11 +41,14 @@ namespace MZcms.ServiceProvider
                     string implementName = iserviceName.Substring(1);
                     string className = string.Format("{0}.{1}, {2}", nameSpace, implementName, assembly);
 
+                    //获取对应类型
                     Type implementType = Type.GetType(className);
 
+                    //如果未找到类型
                     if (implementType == null)
                         throw new NotImplementedException("未找到" + className);
 
+                    //注册类型
                     builder.RegisterType(implementType).As<T>();
                     container = builder.Build();
 
