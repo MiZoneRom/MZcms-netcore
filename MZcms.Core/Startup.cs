@@ -56,9 +56,10 @@ namespace MZcms.Core
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))//拿到SecurityKey
                     };
 
-                    //认证过期添加过期消息
+                    //认证事件
                     options.Events = new JwtBearerEvents
                     {
+                        //认证过期添加过期消息
                         OnAuthenticationFailed = context =>
                         {
                             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))

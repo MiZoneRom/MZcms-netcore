@@ -19,11 +19,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MZcms.IServices", "MZcms.IS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MZcms.Common", "MZcms.Common\MZcms.Common.csproj", "{83507EBF-7C0B-4649-8481-5A3FCF6AAC9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZcms.DTO", "MZcms.DTO\MZcms.DTO.csproj", "{0E4BAAB5-9932-4574-9285-0A04CA0295A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MZcms.DTO", "MZcms.DTO\MZcms.DTO.csproj", "{0E4BAAB5-9932-4574-9285-0A04CA0295A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZcms.CommonModel", "MZcms.CommonModel\MZcms.CommonModel.csproj", "{E014BB5C-7B60-4B4E-B8BA-E41A2214366B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MZcms.CommonModel", "MZcms.CommonModel\MZcms.CommonModel.csproj", "{E014BB5C-7B60-4B4E-B8BA-E41A2214366B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZcms.ServiceProvider", "MZcms.ServiceProvider\MZcms.ServiceProvider.csproj", "{E31408EC-E9AF-46E5-B0EF-113187D1B877}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MZcms.ServiceProvider", "MZcms.ServiceProvider\MZcms.ServiceProvider.csproj", "{E31408EC-E9AF-46E5-B0EF-113187D1B877}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZcms.Strategy.IO", "MZcms.Strategy.IO\MZcms.Strategy.IO.csproj", "{26E94248-063E-4509-89C3-E06567CC6051}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZcms.Strategy.AspNetIO", "MZcms.Strategy.AspNetIO\MZcms.Strategy.AspNetIO.csproj", "{1BA40D98-02D6-4DC9-8440-6F26CBC739D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +79,14 @@ Global
 		{E31408EC-E9AF-46E5-B0EF-113187D1B877}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E31408EC-E9AF-46E5-B0EF-113187D1B877}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E31408EC-E9AF-46E5-B0EF-113187D1B877}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E94248-063E-4509-89C3-E06567CC6051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E94248-063E-4509-89C3-E06567CC6051}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E94248-063E-4509-89C3-E06567CC6051}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E94248-063E-4509-89C3-E06567CC6051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BA40D98-02D6-4DC9-8440-6F26CBC739D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA40D98-02D6-4DC9-8440-6F26CBC739D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA40D98-02D6-4DC9-8440-6F26CBC739D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA40D98-02D6-4DC9-8440-6F26CBC739D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

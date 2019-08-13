@@ -65,11 +65,10 @@ namespace MZcms.Core.Framework.BaseControllers
                     return null;
                 }
 
-                var services = new ServiceCollection();
-                var provider = services.BuildServiceProvider();
-                provider.GetService<IManagerService>().GetManagers("aaa");
+                long userId = Convert.ToInt64(iden.Value);
+                Managers manager = ServiceProvider.Instance<IManagerService>.Create.GetPlatformManager(userId);
 
-                return null;
+                return manager;
             }
             set
             {
