@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace MZcms.Strategy.AspNetIO
+namespace MZcms.Strategy
 {
     public enum IOErrorMsg
     {

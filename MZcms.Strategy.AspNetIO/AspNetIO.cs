@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MZcms.Strategy.AspNetIO
 {
-   public class AspNetIO : IMZcmsIO
+    public class AspNetIO : IMZcmsIO
     {
 
         public void AppendFile(string fileName, string content)
@@ -43,7 +43,7 @@ namespace MZcms.Strategy.AspNetIO
         {
             if (string.IsNullOrWhiteSpace(sourceFileName))
             {
-                throw new MZcmsIOException(IOErrorMsg.FileNotExist.ToDescription());
+                throw new MZcmsIOException(EnumExtensions.GetDescription(IOErrorMsg.FileNotExist));
             }
             var s = GetPhysicalPath(sourceFileName);
             var d = GetPhysicalPath(destFileName);
@@ -54,7 +54,7 @@ namespace MZcms.Strategy.AspNetIO
             }
             if (!overwrite && ExistFile(destFileName)) //如果不可覆盖文件且目标文件已存在,传相对路径
             {
-                throw new MZcmsIOException(IOErrorMsg.FileExist.ToDescription());
+                throw new MZcmsIOException(EnumExtensions.GetDescription(IOErrorMsg.FileExist));
             }
             else
             {
@@ -99,7 +99,7 @@ namespace MZcms.Strategy.AspNetIO
                 }
                 else
                 {
-                    throw new MZcmsIOException(IOErrorMsg.FileExist.ToDescription());
+                    throw new MZcmsIOException(EnumExtensions.GetDescription(IOErrorMsg.FileExist));
                 }
             }
             else
@@ -141,7 +141,7 @@ namespace MZcms.Strategy.AspNetIO
                 }
                 else
                 {
-                    throw new MZcmsIOException(IOErrorMsg.FileExist.ToDescription());
+                    throw new MZcmsIOException(EnumExtensions.GetDescription(IOErrorMsg.FileExist));
                 }
             }
             else
@@ -164,7 +164,7 @@ namespace MZcms.Strategy.AspNetIO
             }
             else
             {
-                throw new MZcmsIOException(IOErrorMsg.DirNotExist.ToDescription());
+                throw new MZcmsIOException(EnumExtensions.GetDescription(IOErrorMsg.DirNotExist));
             }
         }
 
@@ -222,7 +222,7 @@ namespace MZcms.Strategy.AspNetIO
             var path = GetPhysicalPath(dirName);
             MetaInfo info = new MetaInfo();
             info.LastModifiedTime = Directory.GetLastWriteTime(path);
-            info.ContentLength = Core.Helper.IOHelper.GetDirectoryLength(path);
+            info.ContentLength = Common.Helper.IOHelper.GetDirectoryLength(path);
             return info;
         }
 
@@ -230,7 +230,7 @@ namespace MZcms.Strategy.AspNetIO
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
-                throw new MZcmsIOException(IOErrorMsg.FileNotExist.ToDescription());
+                throw new MZcmsIOException(EnumExtensions.GetDescription(IOErrorMsg.FileNotExist));
             }
             var f = GetPhysicalPath(fileName);
             FileStream fs = new FileStream(f, FileMode.Open);
@@ -315,7 +315,7 @@ namespace MZcms.Strategy.AspNetIO
         {
             if (string.IsNullOrWhiteSpace(sourceFileName))
             {
-                throw new MZcmsIOException(IOErrorMsg.FileNotExist.ToDescription());
+                throw new MZcmsIOException(EnumExtensions.GetDescription(IOErrorMsg.FileNotExist));
             }
             var s = GetPhysicalPath(sourceFileName);
             var d = GetPhysicalPath(destFileName);
@@ -326,7 +326,7 @@ namespace MZcms.Strategy.AspNetIO
             }
             if (!overwrite && ExistFile(d)) //如果不可覆盖文件且目标文件已存在
             {
-                throw new MZcmsIOException(IOErrorMsg.FileExist.ToDescription());
+                throw new MZcmsIOException(EnumExtensions.GetDescription(IOErrorMsg.FileExist));
             }
             else
             {
@@ -337,9 +337,9 @@ namespace MZcms.Strategy.AspNetIO
 
         private string GetHttpUrl()
         {
-            string host = Core.Helper.WebHelper.GetHost();
-            var port = Core.Helper.WebHelper.GetPort();
-            var Scheme = Core.Helper.WebHelper.GetScheme();
+            string host = Common.Helper.WebHelper.GetHost();
+            var port = Common.Helper.WebHelper.GetPort();
+            var Scheme = Common.Helper.WebHelper.GetScheme();
             var portPre = port == "80" ? "" : ":" + port;
             return Scheme + "://" + host + portPre + "/";
         }
@@ -365,7 +365,7 @@ namespace MZcms.Strategy.AspNetIO
                     fileName = fileName.Substring(0, index);
             }
 
-            return Core.Helper.IOHelper.GetMapPath(fileName);
+            return Common.Helper.IOHelper.GetMapPath(fileName);
         }
 
         private string GetDirName(string dirName)
