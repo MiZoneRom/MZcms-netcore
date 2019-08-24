@@ -70,6 +70,11 @@ namespace MZcms.Core
                                 context.Response.Headers.Add("act", "expired");
                             }
                             return Task.CompletedTask;
+                        },
+                        OnMessageReceived = context =>
+                        {
+                            Log.Info(context.Response + "Receive");
+                            return Task.CompletedTask;
                         }
                     };
 
