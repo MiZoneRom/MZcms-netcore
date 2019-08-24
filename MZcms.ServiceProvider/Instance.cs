@@ -24,7 +24,7 @@ namespace MZcms.ServiceProvider
 
                 ConfigurationBuilder configBuild = new ConfigurationBuilder();
                 configBuild.SetBasePath(Directory.GetCurrentDirectory());
-                configBuild.Add(new JsonConfigurationSource { Path = "autofac.json", ReloadOnChange = true });
+                configBuild.Add(new JsonConfigurationSource { Path = "Config/autofac.json", ReloadOnChange = true });
                 IConfigurationRoot config = configBuild.Build();
                 ConfigurationModule module = new ConfigurationModule(config);
                 var components = config.GetSection("components").GetChildren();

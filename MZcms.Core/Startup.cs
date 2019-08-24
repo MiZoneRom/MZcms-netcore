@@ -72,6 +72,7 @@ namespace MZcms.Core
                             return Task.CompletedTask;
                         }
                     };
+
                 });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
