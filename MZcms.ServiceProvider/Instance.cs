@@ -35,7 +35,6 @@ namespace MZcms.ServiceProvider
                     var services = item.GetSection("services").GetChildren().FirstOrDefault();
                     var serviceItem = services.GetSection("type");
                     var serviceValue = serviceItem.Value;
-                    Log.Info("aaaaaaaaaa" + typeof(T).FullName);
                     if (serviceValue.Contains(typeof(T).FullName))
                     {
                         element = serviceItem;

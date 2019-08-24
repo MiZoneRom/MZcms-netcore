@@ -30,7 +30,7 @@ namespace MZcms.Core.Controllers
             //  new Operation(Guid.NewGuid()));
             //provider.GetService<IManagerService>().GetManagers("aaa");
 
-            ServiceProvider.Instance<IManagerService>.Create.GetManagers("admin");
+            ServiceProvider.Instance<IManagerService>.Create.GetPlatformManager(1);
 
             return new string[] { "value1", "value2" };
         }

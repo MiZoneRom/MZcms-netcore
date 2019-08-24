@@ -28,14 +28,8 @@ namespace MZcms.Common
         /// <exception cref="CacheRegisterException"></exception>
         private static void Load()
         {
-            //通过autofac获取缓存的实现
-            //var builder = new ContainerBuilder();
-            //builder.RegisterType<ICache>();
-            //builder.RegisterModule(new ConfigurationSettingsReader("autofac"));
-            //IContainer container = null;
             try
             {
-                //container = builder.Build();
                 cache = ObjectContainer.Current.Resolve<ICache>();
             }
             catch (Exception ex)

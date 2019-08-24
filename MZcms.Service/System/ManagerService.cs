@@ -36,35 +36,35 @@ namespace MZcms.Service
             Managers manager = null;
             string CACHE_MANAGER_KEY = CacheKeyCollection.Manager(userId);
 
-            //if (Cache.Exists(CACHE_MANAGER_KEY))
-            //{
-            //    manager = Common.Cache.Get<Managers>(CACHE_MANAGER_KEY);
-            //}
-            //else
-            //{
-            manager = Context.Managers.FirstOrDefault(item => item.Id == userId);
-            if (manager == null)
-                return null;
-            if (manager.RoleId == 0)
+            if (Cache.Exists(CACHE_MANAGER_KEY))
             {
-                List<AdminPrivilege> AdminPrivileges = new List<AdminPrivilege>();
-                AdminPrivileges.Add((AdminPrivilege)0);
-                manager.RealName = "系统管理员";
-                manager.AdminPrivileges = AdminPrivileges;
+                manager = Common.Cache.Get<Managers>(CACHE_MANAGER_KEY);
             }
             else
             {
-                var model = Context.Managers.FirstOrDefault(p => p.Id == manager.RoleId);
-                if (model != null)
+                manager = Context.Managers.FirstOrDefault(item => item.Id == userId);
+                if (manager == null)
+                    return null;
+                if (manager.RoleId == 0)
                 {
                     List<AdminPrivilege> AdminPrivileges = new List<AdminPrivilege>();
-                    (from a in Context.ManagerPrivileges where a.RoleId == model.RoleId select a).ToList().ForEach(a => AdminPrivileges.Add((AdminPrivilege)a.Privilege));
-                    manager.RealName = model.RealName;
+                    AdminPrivileges.Add((AdminPrivilege)0);
+                    manager.RealName = "系统管理员";
                     manager.AdminPrivileges = AdminPrivileges;
                 }
+                else
+                {
+                    var model = Context.Managers.FirstOrDefault(p => p.Id == manager.RoleId);
+                    if (model != null)
+                    {
+                        List<AdminPrivilege> AdminPrivileges = new List<AdminPrivilege>();
+                        (from a in Context.ManagerPrivileges where a.RoleId == model.RoleId select a).ToList().ForEach(a => AdminPrivileges.Add((AdminPrivilege)a.Privilege));
+                        manager.RealName = model.RealName;
+                        manager.AdminPrivileges = AdminPrivileges;
+                    }
+                }
+                Cache.Insert(CACHE_MANAGER_KEY, manager);
             }
-            //    Cache.Insert(CACHE_MANAGER_KEY, manager);
-            //}
             return manager;
         }
 
