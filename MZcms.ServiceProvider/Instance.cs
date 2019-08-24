@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using MZcms.Common;
+using Microsoft.Extensions.Configuration.Json;
+using System.IO;
 
 namespace MZcms.ServiceProvider
 {
@@ -21,7 +23,8 @@ namespace MZcms.ServiceProvider
                 ContainerBuilder builder = new ContainerBuilder();
 
                 ConfigurationBuilder configBuild = new ConfigurationBuilder();
-                configBuild.AddJsonFile("autofac.json");
+                configBuild.SetBasePath(Directory.GetCurrentDirectory());
+                configBuild.Add(new JsonConfigurationSource { Path = "autofac.json", ReloadOnChange = true });
                 IConfigurationRoot config = configBuild.Build();
                 ConfigurationModule module = new ConfigurationModule(config);
                 var components = config.GetSection("components").GetChildren();
@@ -32,6 +35,7 @@ namespace MZcms.ServiceProvider
                     var services = item.GetSection("services").GetChildren().FirstOrDefault();
                     var serviceItem = services.GetSection("type");
                     var serviceValue = serviceItem.Value;
+                    Log.Info("aaaaaaaaaa" + typeof(T).FullName);
                     if (serviceValue.Contains(typeof(T).FullName))
                     {
                         element = serviceItem;
