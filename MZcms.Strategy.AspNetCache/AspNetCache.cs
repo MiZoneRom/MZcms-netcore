@@ -5,6 +5,7 @@ using System.Web;
 using System.Collections.Generic;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 
 namespace MZcms.Strategy
 {
@@ -77,7 +78,7 @@ namespace MZcms.Strategy
             {
                 if (cache.Get(key) != null)
                     cache.Remove(key);
-                cache.Set(key, value, null, cacheTime, System.Web.Caching.Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                cache.Set(key, value, new MemoryCacheEntryOptions().SetAbsoluteExpiration(cacheTime - DateTime.Now));
             }
         }
 
@@ -95,9 +96,11 @@ namespace MZcms.Strategy
         /// </summary>
         public void Clear()
         {
-            IDictionaryEnumerator cacheEnum = cache .GetEnumerator();
-            while (cacheEnum.MoveNext())
-                cache.Remove(cacheEnum.Key.ToString());
+            var l = GetCacheKeys();
+            foreach (var s in l)
+            {
+                Remove(s);
+            }
         }
 
         public void Send(string key, object data)
@@ -134,7 +137,7 @@ namespace MZcms.Strategy
             {
                 if (cache.Get(key) != null)
                     cache.Remove(key);
-                cache.Insert(key, value);
+                cache.Set(key, value);
             }
         }
 
@@ -144,7 +147,7 @@ namespace MZcms.Strategy
             {
                 if (cache.Get(key) != null)
                     cache.Remove(key);
-                cache.Insert(key, value, null, DateTime.Now.AddSeconds(cacheTime), System.Web.Caching.Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                cache.Set(key, value, new MemoryCacheEntryOptions().SetAbsoluteExpiration(new TimeSpan(cacheTime)));
             }
         }
 
@@ -154,7 +157,7 @@ namespace MZcms.Strategy
             {
                 if (cache.Get(key) != null)
                     cache.Remove(key);
-                cache.Insert(key, value, null, cacheTime, System.Web.Caching.Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                cache.Set(key, value, new MemoryCacheEntryOptions().SetAbsoluteExpiration(cacheTime - DateTime.Now));
             }
         }
 
@@ -193,7 +196,23 @@ namespace MZcms.Strategy
             }
         }
 
-
+        /// <summary>
+        /// 获取所有缓存键
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetCacheKeys()
+        {
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            var entries = cache.GetType().GetField("_entries", flags).GetValue(cache);
+            var cacheItems = entries as IDictionary;
+            var keys = new List<string>();
+            if (cacheItems == null) return keys;
+            foreach (DictionaryEntry cacheItem in cacheItems)
+            {
+                keys.Add(cacheItem.Key.ToString());
+            }
+            return keys;
+        }
 
 
     }
