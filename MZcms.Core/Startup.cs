@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Configuration;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -107,7 +110,11 @@ namespace MZcms.Core
                 .AsImplementedInterfaces().InstancePerLifetimeScope();
 
             builder.Populate(services);
+
             ApplicationContainer = builder.Build();
+
+
+            ObjectContainer.ApplicationStart(new AutoFacContainer());
 
             //第三方IOC接管 core内置DI容器
             return new AutofacServiceProvider(ApplicationContainer);

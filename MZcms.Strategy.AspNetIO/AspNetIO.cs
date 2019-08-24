@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MZcms.Strategy.AspNetIO
+namespace MZcms.Strategy
 {
     public class AspNetIO : IMZcmsIO
     {
