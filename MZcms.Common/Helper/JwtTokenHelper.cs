@@ -34,8 +34,8 @@ namespace MZcms.Common.Helper
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); //凭证 ，根据密钥生成
 
             var token = new JwtSecurityToken(
-                issuer: "jwttest",
-                audience: "jwttest",
+                audience: _configuration["ValidAudience"],
+                issuer: _configuration["ValidIssuer"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(1),
                 signingCredentials: creds
@@ -56,8 +56,8 @@ namespace MZcms.Common.Helper
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); //凭证 ，根据密钥生成
 
             var token = new JwtSecurityToken(
-                issuer: "jwttest",
-                audience: "jwttest",
+                audience: _configuration["ValidAudience"],
+                issuer: _configuration["ValidIssuer"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(1),
                 signingCredentials: creds

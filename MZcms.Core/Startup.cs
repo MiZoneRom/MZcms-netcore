@@ -54,8 +54,8 @@ namespace MZcms.Core
                         ValidateAudience = true,//是否验证Audience
                         ValidateLifetime = true,//是否验证失效时间
                         ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                        ValidAudience = "jwttest",//Audience
-                        ValidIssuer = "jwttest",//Issuer，这两项和前面签发jwt的设置一致
+                        ValidAudience = Configuration["ValidAudience"],//Audience
+                        ValidIssuer = Configuration["ValidIssuer"],//Issuer，这两项和前面签发jwt的设置一致
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))//拿到SecurityKey
                     };
 
