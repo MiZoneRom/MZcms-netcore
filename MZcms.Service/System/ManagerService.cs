@@ -1,4 +1,5 @@
 ﻿using MZcms.Common;
+using MZcms.Common.Helper;
 using MZcms.CommonModel;
 using MZcms.DTO.QueryModel;
 using MZcms.Entity;
@@ -36,9 +37,9 @@ namespace MZcms.Service
             Managers manager = null;
             string CACHE_MANAGER_KEY = CacheKeyCollection.Manager(userId);
 
-            if (Cache.Exists(CACHE_MANAGER_KEY))
+            if (CacheHelper.Exists(CACHE_MANAGER_KEY))
             {
-                manager = Common.Cache.Get<Managers>(CACHE_MANAGER_KEY);
+                manager = CacheHelper.Get<Managers>(CACHE_MANAGER_KEY);
             }
             else
             {
@@ -63,7 +64,7 @@ namespace MZcms.Service
                         manager.AdminPrivileges = AdminPrivileges;
                     }
                 }
-                Cache.Insert(CACHE_MANAGER_KEY, manager);
+                CacheHelper.Insert(CACHE_MANAGER_KEY, manager);
             }
             return manager;
         }
@@ -99,7 +100,7 @@ namespace MZcms.Service
 
             Context.SaveChanges();
             string CACHE_MANAGER_KEY = CacheKeyCollection.Manager(id);
-            Common.Cache.Remove(CACHE_MANAGER_KEY);
+            CacheHelper.Remove(CACHE_MANAGER_KEY);
         }
 
         public void DeletePlatformManager(long id)
@@ -108,7 +109,7 @@ namespace MZcms.Service
             Context.Managers.Remove(model);
             Context.SaveChanges();
             string CACHE_MANAGER_KEY = CacheKeyCollection.Manager(id);
-            Common.Cache.Remove(CACHE_MANAGER_KEY);
+            CacheHelper.Remove(CACHE_MANAGER_KEY);
         }
 
 
@@ -120,7 +121,7 @@ namespace MZcms.Service
             foreach (var id in ids)
             {
                 string CACHE_MANAGER_KEY = CacheKeyCollection.Manager(id);
-                Common.Cache.Remove(CACHE_MANAGER_KEY);
+                CacheHelper.Remove(CACHE_MANAGER_KEY);
             }
         }
 

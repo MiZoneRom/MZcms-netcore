@@ -113,9 +113,6 @@ namespace MZcms.Core
 
             ApplicationContainer = builder.Build();
 
-
-            ObjectContainer.ApplicationStart(new AutoFacContainer());
-
             //第三方IOC接管 core内置DI容器
             return new AutofacServiceProvider(ApplicationContainer);
 

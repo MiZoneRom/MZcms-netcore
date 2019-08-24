@@ -1,4 +1,5 @@
-﻿using MZcms.CommonModel;
+﻿using MZcms.Common.Helper;
+using MZcms.CommonModel;
 using MZcms.Entity;
 using MZcms.Entity.Entities;
 using MZcms.IServices;
@@ -16,8 +17,8 @@ namespace MZcms.Service
         {
             SiteSettingsInfo siteSettingsInfo = null;
 
-            if (Common.Cache.Exists(CacheKeyCollection.SiteSettings))//如果存在缓存，则从缓存中读取
-                siteSettingsInfo = Common.Cache.Get<SiteSettingsInfo>(CacheKeyCollection.SiteSettings);
+            if (CacheHelper.Exists(CacheKeyCollection.SiteSettings))//如果存在缓存，则从缓存中读取
+                siteSettingsInfo = CacheHelper.Get<SiteSettingsInfo>(CacheKeyCollection.SiteSettings);
 
             if (siteSettingsInfo == null)
             {
@@ -38,7 +39,7 @@ namespace MZcms.Service
                     }
                 }
 
-                Common.Cache.Insert(CacheKeyCollection.SiteSettings, siteSettingsInfo);
+                CacheHelper.Insert(CacheKeyCollection.SiteSettings, siteSettingsInfo);
             }
 
             return siteSettingsInfo;
@@ -105,7 +106,7 @@ namespace MZcms.Service
             var propertyNames = properties.Select(item => item.Name);
             Context.SiteSettings.RemoveRange(siteSettingInfos.Where(item => !propertyNames.Contains(item.Key)));
             Context.SaveChanges();
-            Common.Cache.Remove(CacheKeyCollection.SiteSettings);
+            CacheHelper.Remove(CacheKeyCollection.SiteSettings);
         }
 
         public void SaveSetting(string key, object value)
@@ -127,7 +128,7 @@ namespace MZcms.Service
             siteSetting.Key = key;
             siteSetting.Value = value.ToString();
             Context.SaveChanges();
-            Common.Cache.Remove(CacheKeyCollection.SiteSettings);
+            CacheHelper.Remove(CacheKeyCollection.SiteSettings);
         }
 
 
