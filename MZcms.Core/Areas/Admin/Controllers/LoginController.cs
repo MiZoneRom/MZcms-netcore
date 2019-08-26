@@ -50,7 +50,21 @@ namespace MZcms.Core.Areas.Admin.Controllers
             string token = jwtTokenHelper.GetToken(claims);
             string refreshToken = jwtTokenHelper.RefreshToken();
 
+            _manager.AddRefeshToken(token, refreshToken, managerModel.Id, 1);
+
             return SuccessResult<object>(new { token = token, refreshToken = refreshToken, userName = managerModel.UserName });
+        }
+
+        public ActionResult<object> RefreshToken(string accessToken, string refreshToken)
+        {
+
+            if (CurrentManager == null)
+            {
+                return ErrorResult<int>("用户登录过期");
+            }
+
+            return ErrorResult<int>("用户登录过期");
+
         }
 
     }

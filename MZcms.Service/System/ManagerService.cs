@@ -112,7 +112,6 @@ namespace MZcms.Service
             CacheHelper.Remove(CACHE_MANAGER_KEY);
         }
 
-
         public void BatchDeletePlatformManager(long[] ids)
         {
             var model = Context.Managers.FindBy(item => item.RoleId != 0 && ids.Contains(item.Id));
@@ -124,8 +123,6 @@ namespace MZcms.Service
                 CacheHelper.Remove(CACHE_MANAGER_KEY);
             }
         }
-
-
 
         public IQueryable<Managers> GetManagers(string keyWords)
         {
@@ -164,6 +161,12 @@ namespace MZcms.Service
                 return Context.Managers.Any(item => item.UserName.ToLower() == username.ToLower());
             }
             return Context.Users.Any(item => item.UserName.ToLower() == username.ToLower());
+        }
+
+        public void AddRefeshToken(string token, string refeshToken, long userId, double minutes = 1)
+        {
+            Context.ManagerToken.Add(new ManagerToken() { UserId = userId, Token = token, RefreshToken = refeshToken, Expires = DateTime.Now.AddMinutes(minutes) });
+            Context.SaveChanges();
         }
 
     }

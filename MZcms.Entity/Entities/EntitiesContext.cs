@@ -17,6 +17,7 @@ namespace MZcms.Entity.Entities
 
         public virtual DbSet<ManagerLog> ManagerLog { get; set; }
         public virtual DbSet<ManagerPrivileges> ManagerPrivileges { get; set; }
+        public virtual DbSet<ManagerToken> ManagerToken { get; set; }
         public virtual DbSet<Managers> Managers { get; set; }
         public virtual DbSet<ManagersRoles> ManagersRoles { get; set; }
         public virtual DbSet<SiteSettings> SiteSettings { get; set; }
@@ -71,6 +72,19 @@ namespace MZcms.Entity.Entities
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ManagerPrivileges_ManagersRoles");
+            });
+
+            modelBuilder.Entity<ManagerToken>(entity =>
+            {
+                entity.Property(e => e.Token)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.RefreshToken)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.Expires).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Managers>(entity =>

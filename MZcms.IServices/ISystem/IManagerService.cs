@@ -80,5 +80,6 @@ namespace MZcms.IServices
         /// <returns></returns>
         Managers Login(string username, string password);
 
+        void AddRefeshToken(string token, string refeshToken, long userId, double minutes = 1);
     }
 }
