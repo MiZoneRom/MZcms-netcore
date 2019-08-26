@@ -169,5 +169,17 @@ namespace MZcms.Service
             Context.SaveChanges();
         }
 
+        public ManagerToken GetToken(long userId)
+        {
+            return (from a in Context.ManagerToken where a.UserId == userId orderby a.Id descending select a).FirstOrDefault();
+        }
+
+        public void RemoveToken(long userId)
+        {
+            IQueryable<ManagerToken> tokenList = (from a in Context.ManagerToken where a.UserId == userId select a);
+            Context.ManagerToken.RemoveRange(tokenList);
+            Context.SaveChanges();
+        }
+
     }
 }

@@ -81,5 +81,9 @@ namespace MZcms.IServices
         Managers Login(string username, string password);
 
         void AddRefeshToken(string token, string refeshToken, long userId, double minutes = 1);
+
+        ManagerToken GetToken(long userId);
+
+        void RemoveToken(long userId);
     }
 }

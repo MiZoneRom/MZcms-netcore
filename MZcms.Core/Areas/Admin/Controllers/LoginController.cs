@@ -55,16 +55,46 @@ namespace MZcms.Core.Areas.Admin.Controllers
             return SuccessResult<object>(new { token = token, refreshToken = refreshToken, userName = managerModel.UserName });
         }
 
-        public ActionResult<object> RefreshToken(string accessToken, string refreshToken)
+        [HttpPost("RefreshToken")]
+        public ActionResult<object> RefreshToken([FromBody] TokenModel entity)
         {
+            Managers managerModel = CurrentManager;
 
-            if (CurrentManager == null)
+            if (managerModel == null)
             {
                 return ErrorResult<int>("用户登录过期");
             }
 
-            return ErrorResult<int>("用户登录过期");
+            ManagerToken tokenModel = _manager.GetToken(managerModel.Id);
 
+            if (tokenModel == null)
+            {
+                return ErrorResult<int>("认证过期");
+            }
+
+            _manager.RemoveToken(managerModel.Id);
+
+            JwtTokenHelper jwtTokenHelper = new JwtTokenHelper();
+
+            var claims = new Claim[]
+            {
+                new Claim(ClaimTypes.Name, managerModel.UserName),
+                new Claim(ClaimTypes.Role, managerModel.RoleId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sid, managerModel.Id.ToString()),
+            };
+
+            string newToken = jwtTokenHelper.GetToken(claims);
+            string newRefreshToken = jwtTokenHelper.RefreshToken();
+
+            _manager.AddRefeshToken(newToken, newRefreshToken, managerModel.Id, 1);
+
+            return SuccessResult<object>(new { token = newToken, refreshToken = newRefreshToken, userName = managerModel.UserName });
+
+        }
+
+        public class TokenModel {
+            string token { get; set; }
+            string refresh_token { get; set; }
         }
 
     }
