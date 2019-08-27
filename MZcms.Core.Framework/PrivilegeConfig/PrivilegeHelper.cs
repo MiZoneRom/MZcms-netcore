@@ -133,22 +133,22 @@ namespace MZcms.Web.Framework
 
                 }
 
-                group.GroupName = groupInfo.GroupName;
+                group.Name = groupInfo.GroupName;
                 item.PrivilegeId = groupInfo.Pid;
                 item.Name = groupInfo.Name;
-                item.Url = groupInfo.Url;
+                item.Path = groupInfo.Url;
                 item.Type = groupInfo.AdminCatalogType;
 
                 item.Controllers.AddRange(ctrls);
-                var currentGroup = p.Privilege.FirstOrDefault(a => a.GroupName == group.GroupName);
+                var currentGroup = p.Privilege.FirstOrDefault(a => a.Name == group.Name);
                 if (currentGroup == null)
                 {
-                    group.Items.Add(item);
+                    group.Children.Add(item);
                     p.Privilege.Add(group);
                 }
                 else
                 {
-                    currentGroup.Items.Add(item);
+                    currentGroup.Children.Add(item);
                 }
             }
 
@@ -210,22 +210,23 @@ namespace MZcms.Web.Framework
                 }
 
 
-                group.GroupName = groupInfo.GroupName;
+                group.Name = groupInfo.GroupName;
+                group.Path = "/";
                 item.PrivilegeId = groupInfo.Pid;
                 item.Name = groupInfo.Name;
-                item.Url = groupInfo.Url;
+                item.Path = groupInfo.Url;
                 item.Type = groupInfo.AdminCatalogType;
                 item.LinkTarget = linkTarget;
                 item.Controllers.AddRange(ctrls);
-                var currentGroup = p.Privilege.FirstOrDefault(a => a.GroupName == group.GroupName);
+                var currentGroup = p.Privilege.FirstOrDefault(a => a.Name == group.Name);
                 if (currentGroup == null)
                 {
-                    group.Items.Add(item);
+                    group.Children.Add(item);
                     p.Privilege.Add(group);
                 }
                 else
                 {
-                    currentGroup.Items.Add(item);
+                    currentGroup.Children.Add(item);
                 }
 
             }
