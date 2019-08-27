@@ -4,4 +4,11 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MZcms.Common\MZcms.Common.csproj" />
+    <ProjectReference Include="..\MZcms.IServices\MZcms.IServices.csproj" />
+    <ProjectReference Include="..\MZcms.Model\MZcms.Model.csproj" />
+    <ProjectReference Include="..\MZcms.ServiceProvider\MZcms.ServiceProvider.csproj" />
+  </ItemGroup>
+
 </Project>

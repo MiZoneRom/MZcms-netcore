@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MZcms.Application\MZcms.Application.csproj" />
     <ProjectReference Include="..\MZcms.Common\MZcms.Common.csproj" />
     <ProjectReference Include="..\MZcms.Entity\MZcms.Entity.csproj" />
     <ProjectReference Include="..\MZcms.IServices\MZcms.IServices.csproj" />
