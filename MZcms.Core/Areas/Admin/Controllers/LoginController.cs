@@ -10,6 +10,7 @@ using MZcms.IServices;
 using MZcms.Entity.Entities;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using MZcms.DTO;
 
 namespace MZcms.Core.Areas.Admin.Controllers
 {
@@ -27,6 +28,12 @@ namespace MZcms.Core.Areas.Admin.Controllers
             _manager = manager;
         }
 
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<object> Get(string username, string password)
         {
@@ -60,8 +67,13 @@ namespace MZcms.Core.Areas.Admin.Controllers
             return SuccessResult<object>(new { token = token, refreshToken = refreshToken, userName = managerModel.UserName, expires = tokenExpired, refreshExpires = refreshToeknExpired });
         }
 
+        /// <summary>
+        /// 刷新Token
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         [HttpPost("RefreshToken")]
-        public ActionResult<object> RefreshToken([FromBody] TokenModel entity)
+        public ActionResult<object> RefreshToken([FromBody] RefreshTokenModel entity)
         {
             Managers managerModel = CurrentManager;
             var jwtSection = _configuration.GetSection("jwt");
@@ -103,12 +115,6 @@ namespace MZcms.Core.Areas.Admin.Controllers
 
             return SuccessResult<object>(new { token = newToken, refreshToken = newRefreshToken, userName = managerModel.UserName, expires = tokenExpired, refreshExpires = refreshToeknExpired });
 
-        }
-
-        public class TokenModel
-        {
-            public string token { get; set; }
-            public string refresh_token { get; set; }
         }
 
     }
