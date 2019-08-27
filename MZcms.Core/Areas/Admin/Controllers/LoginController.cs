@@ -50,7 +50,7 @@ namespace MZcms.Core.Areas.Admin.Controllers
             string token = jwtTokenHelper.GetToken(claims);
             string refreshToken = jwtTokenHelper.RefreshToken();
 
-            _manager.AddRefeshToken(token, refreshToken, managerModel.Id, 1);
+            _manager.AddRefeshToken(token, refreshToken, managerModel.Id, 60);
 
             return SuccessResult<object>(new { token = token, refreshToken = refreshToken, userName = managerModel.UserName });
         }
@@ -86,7 +86,7 @@ namespace MZcms.Core.Areas.Admin.Controllers
             string newToken = jwtTokenHelper.GetToken(claims);
             string newRefreshToken = jwtTokenHelper.RefreshToken();
 
-            _manager.AddRefeshToken(newToken, newRefreshToken, managerModel.Id, 1);
+            _manager.AddRefeshToken(newToken, newRefreshToken, managerModel.Id, 60);
 
             return SuccessResult<object>(new { token = newToken, refreshToken = newRefreshToken, userName = managerModel.UserName });
 
