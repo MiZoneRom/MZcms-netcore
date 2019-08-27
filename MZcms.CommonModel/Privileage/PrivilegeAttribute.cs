@@ -16,15 +16,19 @@ namespace MZcms.CommonModel
         /// 权限组名
         /// </summary>
         public string GroupName { set; get; }
+
         /// <summary>
         /// 权限名
         /// </summary>
         public string Name { set; get; }
+
         public string Url { set; get; }
+
         /// <summary>
         /// 权限包含的控制器名
         /// </summary>
         public string Controller { set; get; }
+
         /// <summary>
         /// 方法名
         /// </summary> 
@@ -32,7 +36,9 @@ namespace MZcms.CommonModel
 
         public int Pid { set; get; }
 
-        public MZcms.CommonModel.AdminCatalogType AdminCatalogType { get; set; }
+        public AdminCatalogType AdminCatalogType { get; set; }
+
+        public string Component { get; set; }
 
         /// <summary>
         /// 链接打开方式，blank,parent,self,top
@@ -49,7 +55,7 @@ namespace MZcms.CommonModel
         /// <param name="Controller">权限包含的控制器</param>
         /// <param name="Action">权限包含的action</param>
         /// <param name="type">是否显示在导航中</param>
-        public PrivilegeAttribute(string groupName, string name, int pid, string url, string controller, string action = "", MZcms.CommonModel.AdminCatalogType type = MZcms.CommonModel.AdminCatalogType.Default, string target = "")
+        public PrivilegeAttribute(string groupName, string name, int pid, string url, string controller,string component, string action = "", MZcms.CommonModel.AdminCatalogType type = MZcms.CommonModel.AdminCatalogType.Default, string target = "")
         {
             this.Name = name;
             this.GroupName = groupName;
@@ -59,6 +65,7 @@ namespace MZcms.CommonModel
             this.Action = action;
             this.AdminCatalogType = type;
             this.LinkTarget = target;
+            this.Component = component;
         }
 
         public PrivilegeAttribute(string controller, string action = "")

@@ -138,6 +138,7 @@ namespace MZcms.Web.Framework
                 item.Name = groupInfo.Name;
                 item.Path = groupInfo.Url;
                 item.Type = groupInfo.AdminCatalogType;
+                item.Component = groupInfo.Component;
 
                 item.Controllers.AddRange(ctrls);
                 var currentGroup = p.Privilege.FirstOrDefault(a => a.Name == group.Name);
@@ -174,17 +175,19 @@ namespace MZcms.Web.Framework
             Privileges p = new Privileges();
             foreach (var field in fields)
             {
+
                 var attributes = field.GetCustomAttributes(typeof(PrivilegeAttribute), true);
                 if (attributes.Length == 0)
                 {
                     continue;
                 }
-                GroupActionItem group = new GroupActionItem();
+
                 ActionItem item = new ActionItem();
                 List<string> actions = new List<string>();
                 List<PrivilegeAttribute> attrs = new List<PrivilegeAttribute>();
                 List<Controllers> ctrls = new List<Controllers>();
                 string linkTarget = string.Empty;
+
                 foreach (var attr in attributes)
                 {
                     Controllers ctrl = new Controllers();
@@ -199,26 +202,34 @@ namespace MZcms.Web.Framework
                     attrs.Add(attribute);
                     linkTarget = attribute.LinkTarget;
                 }
+
                 if (attrs.Count.Equals(0))
                 {
                     continue;
                 }
+
                 var groupInfo = attrs.FirstOrDefault(a => !string.IsNullOrEmpty(a.GroupName));
+
                 if (sitesetting != null)
                 {
 
                 }
 
-
+                GroupActionItem group = new GroupActionItem();
                 group.Name = groupInfo.GroupName;
                 group.Path = "/";
+                group.Component = "Layout";
+
                 item.PrivilegeId = groupInfo.Pid;
                 item.Name = groupInfo.Name;
                 item.Path = groupInfo.Url;
                 item.Type = groupInfo.AdminCatalogType;
                 item.LinkTarget = linkTarget;
+                item.Component = groupInfo.Component;
                 item.Controllers.AddRange(ctrls);
+
                 var currentGroup = p.Privilege.FirstOrDefault(a => a.Name == group.Name);
+
                 if (currentGroup == null)
                 {
                     group.Children.Add(item);
