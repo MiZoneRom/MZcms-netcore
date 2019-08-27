@@ -64,6 +64,11 @@ namespace MZcms.Core.Areas.Admin.Controllers
         public ActionResult<object> RefreshToken([FromBody] TokenModel entity)
         {
             Managers managerModel = CurrentManager;
+            var jwtSection = _configuration.GetSection("jwt");
+            int tokenExpires = Convert.ToInt32(jwtSection.GetSection("TokenExpires").Value);
+            int refreshTokenExpires = Convert.ToInt32(jwtSection.GetSection("RefreshTokenExpires").Value);
+            string token = entity.token;
+            string refreshToken = entity.refresh_token;
 
             if (managerModel == null)
             {
@@ -91,16 +96,19 @@ namespace MZcms.Core.Areas.Admin.Controllers
             string newToken = jwtTokenHelper.GetToken(claims);
             string newRefreshToken = jwtTokenHelper.RefreshToken();
 
-            _manager.AddRefeshToken(newToken, newRefreshToken, managerModel.Id, 60);
+            string tokenExpired = StringHelper.GetTimeStamp(DateTime.UtcNow.AddMinutes(tokenExpires));
+            string refreshToeknExpired = StringHelper.GetTimeStamp(DateTime.UtcNow.AddMinutes(refreshTokenExpires));
 
-            return SuccessResult<object>(new { token = newToken, refreshToken = newRefreshToken, userName = managerModel.UserName });
+            _manager.AddRefeshToken(newToken, newRefreshToken, managerModel.Id, refreshTokenExpires);
+
+            return SuccessResult<object>(new { token = newToken, refreshToken = newRefreshToken, userName = managerModel.UserName, expires = tokenExpired, refreshExpires = refreshToeknExpired });
 
         }
 
         public class TokenModel
         {
-            string token { get; set; }
-            string refresh_token { get; set; }
+            public string token { get; set; }
+            public string refresh_token { get; set; }
         }
 
     }
