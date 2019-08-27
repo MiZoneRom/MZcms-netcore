@@ -32,6 +32,9 @@ namespace MZcms.Core.Areas.Admin.Controllers
         {
 
             Managers managerModel = _manager.Login(username, password);
+            var jwtSection = _configuration.GetSection("jwt");
+            int tokenExpires = Convert.ToInt32(jwtSection.GetSection("TokenExpires").Value);
+            int refreshTokenExpires = Convert.ToInt32(jwtSection.GetSection("RefreshTokenExpires").Value);
 
             if (managerModel == null)
             {
@@ -49,10 +52,12 @@ namespace MZcms.Core.Areas.Admin.Controllers
 
             string token = jwtTokenHelper.GetToken(claims);
             string refreshToken = jwtTokenHelper.RefreshToken();
+            string tokenExpired = StringHelper.GetTimeStamp(DateTime.UtcNow.AddMinutes(tokenExpires));
+            string refreshToeknExpired = StringHelper.GetTimeStamp(DateTime.UtcNow.AddMinutes(refreshTokenExpires));
 
-            _manager.AddRefeshToken(token, refreshToken, managerModel.Id, 60);
+            _manager.AddRefeshToken(token, refreshToken, managerModel.Id, refreshTokenExpires);
 
-            return SuccessResult<object>(new { token = token, refreshToken = refreshToken, userName = managerModel.UserName });
+            return SuccessResult<object>(new { token = token, refreshToken = refreshToken, userName = managerModel.UserName, expires = tokenExpired, refreshExpires = refreshToeknExpired });
         }
 
         [HttpPost("RefreshToken")]
@@ -92,7 +97,8 @@ namespace MZcms.Core.Areas.Admin.Controllers
 
         }
 
-        public class TokenModel {
+        public class TokenModel
+        {
             string token { get; set; }
             string refresh_token { get; set; }
         }

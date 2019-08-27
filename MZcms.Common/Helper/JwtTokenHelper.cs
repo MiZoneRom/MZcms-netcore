@@ -30,14 +30,17 @@ namespace MZcms.Common.Helper
             var claims = new[]
             {new Claim(ClaimTypes.Name, userName)};
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"])); // 获取密钥
+            var jwtSection = _configuration.GetSection("jwt");
+            int tokenExpires = Convert.ToInt32(jwtSection.GetSection("TokenExpires").Value);
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection.GetSection("SecurityKey").Value)); // 获取密钥
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); //凭证 ，根据密钥生成
 
             var token = new JwtSecurityToken(
-                audience: _configuration["ValidAudience"],
-                issuer: _configuration["ValidIssuer"],
+                audience: jwtSection.GetSection("ValidAudience").Value,
+                issuer: jwtSection.GetSection("ValidIssuer").Value,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(tokenExpires),
                 signingCredentials: creds
             );
 
@@ -52,14 +55,17 @@ namespace MZcms.Common.Helper
         public string GetToken(Claim[] claims)
         {
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"])); // 获取密钥
+            var jwtSection = _configuration.GetSection("jwt");
+            int tokenExpires = Convert.ToInt32(jwtSection.GetSection("TokenExpires").Value);
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection.GetSection("SecurityKey").Value)); // 获取密钥
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); //凭证 ，根据密钥生成
 
             var token = new JwtSecurityToken(
-                audience: _configuration["ValidAudience"],
-                issuer: _configuration["ValidIssuer"],
+                audience: jwtSection.GetSection("ValidAudience").Value,
+                issuer: jwtSection.GetSection("ValidIssuer").Value,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(tokenExpires),
                 signingCredentials: creds
             );
 
@@ -88,6 +94,7 @@ namespace MZcms.Common.Helper
         public ClaimsPrincipal GetPrincipalFromAccessToken(string token)
         {
             var handler = new JwtSecurityTokenHandler();
+            var jwtSection = _configuration.GetSection("jwt");
 
             try
             {
@@ -96,7 +103,7 @@ namespace MZcms.Common.Helper
                     ValidateAudience = false,
                     ValidateIssuer = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection.GetSection("SecurityKey").Value)),
                     ValidateLifetime = false
                 }, out SecurityToken validatedToken);
             }

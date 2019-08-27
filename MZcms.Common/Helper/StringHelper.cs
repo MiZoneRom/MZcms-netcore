@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System;
 
 namespace MZcms.Common.Helper
 {
@@ -220,5 +221,26 @@ namespace MZcms.Common.Helper
             }
             return -1;
         }
+
+        /// <summary>
+        /// 获取时间戳
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTimeStamp()
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalMilliseconds).ToString();
+        }
+
+        /// <summary>
+        /// 获取时间戳
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTimeStamp(DateTime date)
+        {
+            TimeSpan ts = date - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalMilliseconds).ToString();
+        }
+
     }
 }
