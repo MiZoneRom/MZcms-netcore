@@ -219,6 +219,7 @@ namespace MZcms.Web.Framework
                 group.Name = groupInfo.GroupName;
                 group.Path = "/";
                 group.Component = "Layout";
+                group.IconCls = "el-icon-edit";
 
                 item.PrivilegeId = groupInfo.Pid;
                 item.Name = groupInfo.Name;
